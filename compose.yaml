@@ -1,0 +1,35 @@
+services:
+  app:
+    image: 'docker-app:latest'
+    build:
+      context: .
+    ports:
+      - '8080:8080'
+    environment:
+      MONGODB_DBNAME: "dockers_demo"
+      MONGODB_USERNAME: "devroot"
+      MONGODB_PASSWORD: "qwerty123"
+      MONGODB_PORT: "27017"
+      SPRING_PROFILES_ACTIVE: "dev"
+    networks:
+      - my-docker-project
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    environment:
+      - 'MONGO_INITDB_DATABASE=dockers_demo'
+      - 'MONGO_INITDB_ROOT_USERNAME=devroot'
+      - 'MONGO_INITDB_ROOT_PASSWORD=qwerty123'
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./data/mongodb:/data/db
+volumes:
+  mongodb:
+    driver: local
+networks:
+  my-docker-project:
+    driver: bridge
