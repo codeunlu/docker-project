@@ -5,10 +5,11 @@ spring:
     exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
   data:
     mongodb:
-      host: localhost
+      host: ${MONGODB_HOST}
       port: ${MONGODB_PORT}
       database: ${MONGODB_DBNAME}
       username: ${MONGODB_USERNAME}
       password: ${MONGODB_PASSWORD}
+      authentication-database: admin
   profiles:
     active: ${SPRING_PROFILES_ACTIVE}
